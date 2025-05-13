@@ -1,0 +1,391 @@
+﻿/* About Page Styles */
+
+/* Hero Section */
+.hero {
+    background-color: #1e3a8a;
+    color: #fff;
+    padding: 80px 0;
+    text-align: center;
+}
+
+    .hero h1 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+    }
+
+    .hero p {
+        font-size: 1.2rem;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+/* Section Title Styling */
+.section-title {
+    font-size: 2rem;
+    color: #1e3a8a;
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+    .section-title:after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 3px;
+        background-color: #3b82f6;
+    }
+
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* About Overview Section */
+.about-overview {
+    padding: 100px 0 60px;
+    background-color: #fff;
+}
+
+.about-content {
+    display: flex;
+    gap: 40px;
+    margin-top: 40px;
+    align-items: center;
+}
+
+.about-image {
+    flex-basis: 45%;
+}
+
+    .about-image img {
+        width: 100%;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+.about-text {
+    flex-basis: 55%;
+}
+
+    .about-text h3 {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+        color: #1e3a8a;
+    }
+
+    .about-text p {
+        margin-bottom: 20px;
+        color: #4b5563;
+        line-height: 1.7;
+    }
+
+/* Button Styles */
+.btn {
+    display: inline-block;
+    padding: 10px 25px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-outline {
+    color: #3b82f6;
+    border: 2px solid #3b82f6;
+    background-color: transparent;
+}
+
+    .btn-outline:hover {
+        background-color: #3b82f6;
+        color: #fff;
+    }
+
+.btn-primary {
+    background-color: #3b82f6;
+    color: #fff;
+    border: 2px solid #3b82f6;
+}
+
+    .btn-primary:hover {
+        background-color: #1e40af;
+        border-color: #1e40af;
+    }
+
+.btn-secondary {
+    background-color: transparent;
+    color: #3b82f6;
+    border: 2px solid #3b82f6;
+}
+
+    .btn-secondary:hover {
+        background-color: #dbeafe;
+    }
+
+/* Mission and Values Section */
+.mission-values {
+    padding: 80px 0;
+    background-color: #f8fafc;
+}
+
+.mission-box {
+    background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+    color: #fff;
+    padding: 40px;
+    border-radius: 8px;
+    margin-bottom: 60px;
+    text-align: center;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+    .mission-box h2 {
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+    }
+
+    .mission-box p {
+        font-size: 1.2rem;
+        max-width: 800px;
+        margin: 0 auto;
+        line-height: 1.7;
+    }
+
+.values-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-top: 40px;
+    justify-content: center;
+}
+
+.value-card {
+    flex-basis: calc(25% - 30px);
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 30px 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    text-align: center;
+    transition: transform 0.3s;
+}
+
+    .value-card:hover {
+        transform: translateY(-10px);
+    }
+
+.value-icon {
+    font-size: 2.5rem;
+    color: #3b82f6;
+    margin-bottom: 20px;
+}
+
+.value-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    color: #1e3a8a;
+}
+
+.value-card p {
+    color: #4b5563;
+}
+
+/* Leadership Section */
+.leadership {
+    padding: 80px 0;
+    background-color: #fff;
+}
+
+.section-intro {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 40px;
+    color: #4b5563;
+    font-size: 1.1rem;
+}
+
+.leadership-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-top: 40px;
+    justify-content: center;
+}
+
+.leader-card {
+    flex-basis: calc(25% - 30px);
+    background-color: #f8fafc;
+    border-radius: 8px;
+    padding: 30px 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    text-align: center;
+    transition: transform 0.3s;
+}
+
+    .leader-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    }
+
+.leader-photo {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+    border: 4px solid #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.leader-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+    color: #1e3a8a;
+}
+
+.leader-title {
+    font-size: 0.9rem;
+    color: #3b82f6;
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+
+.leader-bio {
+    margin-bottom: 20px;
+    color: #4b5563;
+    font-size: 0.95rem;
+}
+
+.btn-outline-sm {
+    font-size: 0.9rem;
+    padding: 6px 15px;
+}
+
+/* Campus Highlights Section */
+.campus-highlights {
+    padding: 80px 0;
+    background-color: #f8fafc;
+}
+
+.highlights-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-top: 40px;
+    justify-content: center;
+}
+
+.highlight-card {
+    flex-basis: calc(33.333% - 30px);
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s;
+}
+
+    .highlight-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .highlight-card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .highlight-card h3 {
+        font-size: 1.2rem;
+        margin: 20px 20px 10px;
+        color: #1e3a8a;
+    }
+
+    .highlight-card p {
+        margin: 0 20px 20px;
+        color: #4b5563;
+    }
+
+/* CTA Section */
+.cta-section {
+    padding: 80px 0;
+    background-color: #1e3a8a;
+    color: #fff;
+    text-align: center;
+}
+
+    .cta-section h2 {
+        font-size: 2rem;
+        margin-bottom: 20px;
+    }
+
+    .cta-section p {
+        font-size: 1.2rem;
+        max-width: 600px;
+        margin: 0 auto 30px;
+    }
+
+.cta-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+/* Responsive Styles for About Page */
+@media (max-width: 992px) {
+    .about-content {
+        flex-direction: column;
+    }
+
+    .about-image, .about-text {
+        flex-basis: 100%;
+    }
+
+    .value-card, .leader-card {
+        flex-basis: calc(50% - 15px);
+    }
+
+    .highlight-card {
+        flex-basis: calc(50% - 15px);
+    }
+}
+
+@media (max-width: 768px) {
+    .hero {
+        padding: 60px 0;
+    }
+
+        .hero h1 {
+            font-size: 2rem;
+        }
+
+    .section-title {
+        font-size: 1.8rem;
+    }
+
+    .value-card, .leader-card, .highlight-card {
+        flex-basis: 100%;
+    }
+
+    .about-overview,
+    .mission-values,
+    .leadership,
+    .campus-highlights {
+        padding: 60px 0;
+    }
+
+    .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+
+        .cta-buttons .btn {
+            width: 100%;
+            max-width: 300px;
+        }
+}

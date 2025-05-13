@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Admin Dashboard</title>
+    @Styles.Render("~/Content/Admin/AdminLayout")
+    @RenderSection("styles", required: false)
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">XYZ University - Admin Portal</div>
+        <nav>
+            <ul>
+                <li>@Html.ActionLink("Dashboard", "Admin_Dashboard", "Admin", new { area = "" }, new { @class = "nav-link" })</li>
+                <li>@Html.ActionLink("Manage Students", "Admin_ManageEnrollees", "Admin", new { area = "" }, new { @class = "nav-link" })</li>
+                <li>@Html.ActionLink("Manage Courses", "Manage_Courses", "Admin", new { area = "" }, new { @class = "nav-link" })</li>
+                <li>@Html.ActionLink("Department", "Display_dispartment", "Course", new { area = "" }, new { @class = "nav-link" })</li>
+                <li>@Html.ActionLink("Logout", "Login_Page", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+            </ul>
+        </nav>
+    </div>
+        @RenderBody()
+    </div>
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <p>123 University Avenue</p>
+                    <p>City, State 12345</p>
+                    <p>Email: admin@xyzuniversity.edu</p>
+                    <p>Phone: (123) 456-7890</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Academic Calendar</a></li>
+                        <li><a href="#">Faculty Resources</a></li>
+                        <li><a href="#">Admin Policies</a></li>
+                        <li><a href="#">Support Center</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Follow Us</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Facebook</a></li>
+                        <li><a href="#">Twitter</a></li>
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#">LinkedIn</a></li>
+                        </ personally>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© @DateTime.Now.Year XYZ University. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+    @Scripts.Render("~/bundles/jquery")
+    <script>
+        // Smooth scrolling for sidebar navigation links
+        document.querySelectorAll('.nav-link').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                // Only apply smooth scrolling for same-page anchor links
+                if (this.getAttribute('href').startsWith('#')) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+                // For non-anchor links (like MVC ActionLinks), allow default behavior
+            });
+        });
+    </script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

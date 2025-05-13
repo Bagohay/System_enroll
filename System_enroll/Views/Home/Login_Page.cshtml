@@ -1,0 +1,42 @@
+﻿@model dynamic
+
+@{
+    ViewBag.Title = "Login - XYZ University";
+}
+
+@section styles {
+    <link href="@Url.Content("~/Content/Login_Page.css")" rel="stylesheet" type="text/css" />
+}
+
+<div class="login-page">
+    <div class="container">
+        <div class="login-form-container">
+            <div class="login-form-header">
+                <h2>Welcome Back</h2>
+                <p>Please enter your credentials to access your account</p>
+            </div>
+            <div class="login-form">
+                <div id="errorMessage" style="color: red; margin-bottom: 10px;"></div>
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" class="form-control" required>
+                    <div class="password-options">
+                        <div class="remember-me">
+                            @*<input type="checkbox" id="remember" name="remember">
+                                <label for="remember">Remember me</label>*@
+                        </div>
+                        @*<a href="#" class="forgot-password">Forgot Password?</a>*@
+                    </div>
+                </div>
+                <a href="#" id="loginBtn" class="login-button btn-full">Log In</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/Jquery/jquery-3.7.1.js"></script>
+<script src="~/Scripts/Myscripts/Login.js"></script>

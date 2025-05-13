@@ -1,0 +1,59 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<main>
+    <section class="hero">
+        <div class="container">
+            <h1>Welcome to XYZ University</h1>
+            <p>Unlock your potential with our world-class education. Start your academic journey today and build the foundation for your future success.</p>
+            <div class="hero-buttons">
+                <a href="#login-options" class="btn btn-primary">Get Started</a>
+                <a href="#" class="btn btn-secondary">Learn More</a>
+            </div>
+        </div>
+    </section>
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">Why Choose XYZ University?</h2>
+            <div class="features-content">
+                <div class="feature-card">
+                    <div class="icon">🎓</div>
+                    <h3>Quality Education</h3>
+                    <p>Our university offers high-quality education with programs designed to meet global standards and prepare students for real-world challenges.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">🔬</div>
+                    <h3>Research Opportunities</h3>
+                    <p>Engage in groundbreaking research with experienced faculty members and contribute to advancements in your field of study.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">🌍</div>
+                    <h3>Global Perspective</h3>
+                    <p>Join a diverse community of students and faculty from around the world and gain a global perspective on your education.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="login-section" id="login-options">
+        <div class="container">
+            <h2 class="section-title" style="color: white;">Enrollment Portal</h2>
+            <div class="card-container">
+                <div class="login-card">
+                    <h3>New Students</h3>
+                    <p>Interested in joining XYZ University? Start your application process here to become a part of our academic community.</p>
+                    @Html.ActionLink("Apply", "Registration_Page", "Home", new { area = "" }, new { @class = "btn btn-accent" })
+                </div>
+                <div class="login-card">
+                    <h3>Current Students</h3>
+                    <p>Already enrolled? Access your student portal to register for courses, check your schedule, and manage your academic journey.</p>
+                    @Html.ActionLink("Login", "Login_Page", "Home", new { area = "" }, new { @class = "login-button" })
+                </div>
+                <div class="login-card">
+                    <h3>Faculty & Staff</h3>
+                    <p>Access the administrative portal to manage courses, student records, and perform other administrative functions.</p>
+                    @Html.ActionLink("Login", "Login_Page", "Home", new { area = "" }, new { @class = "login-button" })
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

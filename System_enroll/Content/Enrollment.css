@@ -1,0 +1,151 @@
+﻿/* Additional styles for the enrollment form */
+.enrollment-section {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+}
+
+.enrollment-title {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.enrollment-form {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+}
+
+    .enrollment-form h2 {
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+    }
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+    .form-control.error {
+        border-color: #dc3545;
+    }
+
+.radio-group {
+    display: flex;
+    gap: 20px;
+}
+
+    .radio-group label {
+        font-weight: normal;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    .radio-group input {
+        margin-right: 8px;
+    }
+
+.form-actions {
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.btn-link {
+    color: #6c757d;
+    text-decoration: none;
+    padding: 10px 20px;
+}
+
+/* Confirmation styles */
+.enrollment-confirmation {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+}
+
+.confirmation-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+    .confirmation-header h2 {
+        color: #28a745;
+        margin-bottom: 10px;
+    }
+
+.confirmation-details {
+    background-color: #f8f9fa;
+    border-radius: 6px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.detail-row {
+    display: flex;
+    margin-bottom: 12px;
+    border-bottom: 1px solid #e9ecef;
+    padding-bottom: 12px;
+}
+
+    .detail-row:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+
+.detail-label {
+    flex-basis: 40%;
+    font-weight: 600;
+}
+
+.confirmation-actions {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.confirmation-note {
+    text-align: center;
+    margin-top: 20px;
+    font-style: italic;
+    color: #6c757d;
+}

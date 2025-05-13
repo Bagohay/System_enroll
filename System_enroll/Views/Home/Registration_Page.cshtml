@@ -1,0 +1,102 @@
+﻿     @{
+    ViewBag.Title = "Registration_Page";
+}
+@section styles {
+    <link href="@Url.Content("~/Content/Registration_Page.css")" rel="stylesheet" type="text/css" />
+}
+<div class="registration-section">
+    <div class="container">
+        <h1 class="registration-title">Student Registration</h1>
+        <div class="registration-form">
+            <h2>New Student Registration</h2>
+            <p>Please complete the form below to begin your enrollment process.</p>
+            <!-- Add a debug section that can be hidden in production -->
+            <div id="debug-info" style="display: none; background: #f8f9fa; padding: 10px; margin-bottom: 15px; border: 1px solid #ddd;">
+                <h4>Debug Information</h4>
+                <p>Selected Program: <span id="selected-program-debug"></span></p>
+                <p>Program ID: <span id="program-id-debug"></span></p>
+            </div>
+            <form id="registrationForm" method="post">
+                <div class="form-group">
+                    <label for="studentFname">First Name</label>
+                    <input type="text" id="studentFname" name="studentFname" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="studentMname">Middle Name (Optional)</label>
+                    <input type="text" id="studentMname" name="studentMname" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="studentLname">Last Name</label>
+                    <input type="text" id="studentLname" name="studentLname" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="emailAddress">Email Address</label>
+                    <input type="email" id="emailAddress" name="emailAddress" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="phoneNumber">Contact Number</label>
+                    <input type="tel" id="phoneNumber" name="phoneNumber" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="homeAddress">Home Address</label>
+                    <input type="text" id="homeAddress" name="homeAddress" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="cityAddress">City</label>
+                    <input type="text" id="cityAddress" name="cityAddress" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="congressDistrict">Congress District</label>
+                    <input type="text" id="congressDistrict" name="congressDistrict" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="programId">Select Program</label>
+                    <select id="programId" name="programId" class="form-control" required>
+                        @if (ViewBag.Programs != null)
+                        {
+                            foreach (var program in ViewBag.Programs)
+                            {
+                                <option value="@program.Value">@program.Text</option>
+                            }
+                        }
+                        else
+                        {
+                            <option value="">No programs available</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="firstGenStudent" name="firstGenStudent">
+                    <label for="firstGenStudent">I am a first generation student</label>
+                </div>
+                <div class="form-actions">
+                    <button type="button" id="submitRegistration" class="btn-primary">Continue to Enrollment</button>
+                    <a href="/Home/Login_Page" class="btn-link">Already registered? Sign in</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="~/Scripts/Jquery/jquery-3.7.1.js"></script>
+<script src="~/Scripts/Myscripts/Registration.js"></script>
+<script>
+    $(document).ready(function () {
+
+        $("#programId").change(function () {
+            var selectedText = $("#programId option:selected").text();
+            var selectedValue = $(this).val();
+
+            $("#selected-program-debug").text(selectedText);
+            $("#program-id-debug").text(selectedValue);
+        });
+
+     
+        var initialText = $("#programId option:selected").text();
+        var initialValue = $("#programId").val();
+
+        $("#selected-program-debug").text(initialText);
+        $("#program-id-debug").text(initialValue);
+
+
+    });
+</script>

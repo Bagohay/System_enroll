@@ -1,0 +1,306 @@
+﻿@{
+    ViewBag.Title = "View Programs";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+@section styles {
+    <link href="@Url.Content("~/Content/ManageEnrollee.css")" rel="stylesheet" type="text/css" />
+    <style>
+        /* Header styles to match screenshot */
+        header {
+            background-color: #2c3e50;
+            padding: 10px 20px;
+            box-shadow: none;
+        }
+
+            header .container {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            header h1 {
+                color: white;
+                font-size: 1.5em;
+                margin: 0;
+            }
+
+            header nav a {
+                color: white;
+                text-decoration: none;
+                margin-left: 20px;
+                font-size: 1em;
+            }
+
+                header nav a:hover {
+                    text-decoration: underline;
+                }
+
+        /* Container and section styles */
+        .container {
+            max-width: none;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .program-section {
+            margin: 20px 0;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+            padding: 8px 12px;
+            text-decoration: none;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.9em;
+            margin: 5px;
+        }
+
+            .btn-primary:hover {
+                background-color: #0069d9;
+            }
+
+        /* Add New Program button to match screenshot */
+        .btn-add-new {
+            background-color: #28a745;
+            color: white;
+            padding: 8px 12px;
+            text-decoration: none;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+            .btn-add-new:hover {
+                background-color: #218838;
+            }
+
+        /* Table styles */
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #ffffff;
+            margin-bottom: 30px;
+            border: 1px solid #ddd;
+        }
+
+            .table th, .table td {
+                padding: 10px;
+                text-align: left;
+                border: 1px solid #ddd;
+            }
+
+            .table th {
+                background-color: #f2f2f2;
+                font-weight: normal;
+                text-transform: uppercase;
+                font-size: 0.9em;
+            }
+
+            .table tr:hover {
+                background-color: #f8f9fa;
+            }
+
+        h3 {
+            color: #333;
+            font-size: 1.25em;
+            margin: 20px 0 10px;
+        }
+
+        .error-message {
+            color: #dc3545;
+            font-size: 1em;
+            margin: 10px 0;
+        }
+
+        footer {
+            padding: 10px 0;
+            margin-top: 40px;
+            text-align: left;
+        }
+
+            footer p {
+                margin: 0;
+                font-size: 0.9em;
+                color: #333;
+            }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 4px;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+            .modal-header h2 {
+                margin: 0;
+                font-size: 1.25em;
+            }
+
+        .close {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+            .close:hover,
+            .close:focus {
+                color: black;
+                text-decoration: none;
+            }
+
+        .modal-body {
+            margin-bottom: 20px;
+        }
+
+            .modal-body label {
+                display: block;
+                margin-bottom: 5px;
+                font-weight: bold;
+            }
+
+            .modal-body input,
+            .modal-body select {
+                width: 100%;
+                padding: 8px;
+                margin-bottom: 10px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                box-sizing: border-box;
+            }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+            .modal-footer button {
+                padding: 8px 12px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                margin-left: 10px;
+            }
+
+        .btn-save {
+            background-color: #28a745;
+            color: white;
+        }
+
+            .btn-save:hover {
+                background-color: #218838;
+            }
+
+        .btn-cancel {
+            background-color: #dc3545;
+            color: white;
+        }
+
+            .btn-cancel:hover {
+                background-color: #c82333;
+            }
+    </style>
+}
+
+<header>
+    <h1>PROGRAMS</h1>
+</header>
+
+<div class="container">
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="error-message">
+            @TempData["ErrorMessage"]
+        </div>
+    }
+
+    <!-- Add hidden input to store the department ID from ViewBag -->
+    <input type="hidden" id="hiddenDeptId" value="@ViewBag.DeptId" />
+
+    <div class="program-section">
+        <a href="javascript:void(0)" class="btn-add-new" onclick="openAddProgramModal()">Add New Program</a>
+    </div>
+
+    <section>
+        <h3>List of Programs</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Program Name</th>
+                    <th>Program Code</th>
+                    <th>Degree Type</th>
+                    <th>Duration (Years)</th>
+                    <th>Department</th>
+                    <th>Other</th>
+                </tr>
+            </thead>
+            <tbody id="programTableBody">
+                <tr>
+                    <td colspan="6">Loading programs...</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- Add Program Modal -->
+    <div id="addProgramModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add New Program</h2>
+                <span class="close" onclick="closeAddProgramModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <label for="programName">Program Name</label>
+                <input type="text" id="programName" placeholder="Enter program name" required>
+
+                <label for="programCode">Program Code</label>
+                <input type="text" id="programCode" placeholder="Enter program code" required>
+
+                <label for="degreeType">Degree Type</label>
+                <select id="degreeType">
+                    <option value="Bachelors">Bachelors</option>
+                    <option value="Masters">Masters</option>
+                    <option value="Doctorate">Doctorate</option>
+                </select>
+
+                <label for="duration">Duration (Years)</label>
+                <input type="number" id="duration" placeholder="Enter duration in years" required>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-cancel" onclick="closeAddProgramModal()">Cancel</button>
+                <button class="btn-save" onclick="addProgram()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/Jquery/jquery-3.7.1.js"></script>
+<script src="~/Scripts/Admin/ManagePrograms.js"></script>

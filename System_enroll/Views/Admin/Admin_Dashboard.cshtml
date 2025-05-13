@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewBag.Title = "Admin_Dashboard";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+@section styles {
+    <link href="@Url.Content("~/Content/Admin/AdminLayout.css")" rel="stylesheet" type="text/css" />
+}
+
+<header>
+    <div class="container">
+        <h1>Admin Dashboard</h1>
+    </div>
+</header>
+<div class="container">
+    <div class="dashboard-content">
+        <div class="widget">
+            <h3>Total Students</h3>
+            <p>1,234</p>
+        </div>
+        <div class="widget">
+            <h3>Active Courses</h3>
+            <p>56</p>
+        </div>
+        <div class="widget">
+            <h3>Pending Enrollments</h3>
+            <p>28</p>
+        </div>
+    </div>
+</div>
