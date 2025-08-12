@@ -1,180 +1,134 @@
 ﻿$(document).ready(function () {
-    // Submit registration form
     $('#submitRegistration').click(function () {
-        // Get the form values
-        var firstName = $("#studentFname").val();
-        var middleName = $("#studentMname").val();
-        var lastName = $("#studentLname").val();
-        var email = $("#emailAddress").val();
-        var phoneNum = $("#phoneNumber").val();
-        var homeAddress = $("#homeAddress").val();
-        var cityAddress = $("#cityAddress").val();
-        var congressDistrict = $("#congressDistrict").val();
-        var programId = $("#programId").val();
+        var firstName = $("#studentFname").val().trim();
+        var middleName = $("#studentMname").val().trim();
+        var lastName = $("#studentLname").val().trim();
+        var email = $("#emailAddress").val().trim();
+        var phoneNum = $("#phoneNumber").val().trim();
+        var homeAddress = $("#homeAddress").val().trim();
+        var cityAddress = $("#cityAddress").val().trim();
+        var congressDistrict = $("#congressDistrict").val().trim();
         var isFirstGenStudent = $("#firstGenStudent").is(":checked");
 
-        // Validate form fields
         let isValid = true;
 
+        // Clear previous error styling
+        $(".form-control").removeClass("error");
+
+        // Validate required fields with debugging
+        console.log("First Name:", firstName);
         if (!firstName) {
+            console.log("First Name validation failed");
             $("#studentFname").addClass("error");
             isValid = false;
-        } else {
-            $("#studentFname").removeClass("error");
         }
 
+        console.log("Last Name:", lastName);
         if (!lastName) {
+            console.log("Last Name validation failed");
             $("#studentLname").addClass("error");
             isValid = false;
-        } else {
-            $("#studentLname").removeClass("error");
         }
 
+        console.log("Email:", email);
         if (!email) {
+            console.log("Email empty validation failed");
             $("#emailAddress").addClass("error");
             isValid = false;
-        } else {
-            $("#emailAddress").removeClass("error");
+        } else if (!isValidEmail(email)) {
+            console.log("Email format validation failed");
+            $("#emailAddress").addClass("error");
+            isValid = false;
         }
 
+        console.log("Phone Number:", phoneNum);
         if (!phoneNum) {
+            console.log("Phone Number validation failed");
             $("#phoneNumber").addClass("error");
             isValid = false;
-        } else {
-            $("#phoneNumber").removeClass("error");
         }
 
+        console.log("Home Address:", homeAddress);
         if (!homeAddress) {
+            console.log("Home Address validation failed");
             $("#homeAddress").addClass("error");
             isValid = false;
-        } else {
-            $("#homeAddress").removeClass("error");
         }
 
+        console.log("City Address:", cityAddress);
         if (!cityAddress) {
+            console.log("City Address validation failed");
             $("#cityAddress").addClass("error");
             isValid = false;
-        } else {
-            $("#cityAddress").removeClass("error");
         }
 
-        if (!programId) {
-            $("#programId").addClass("error");
-            isValid = false;
-        } else {
-            $("#programId").removeClass("error");
-        }
+        console.log("Final isValid state:", isValid);
 
         if (isValid) {
-            // Send AJAX request to server
-            $.ajax({
-                url: "/Home/Registration_Page",
-                type: "POST",
-                data: {
-                    firstname: firstName,
-                    middlename: middleName,
-                    lastname: lastName,
-                    email: email,
-                    phoneNum: phoneNum,
-                    homeAddress: homeAddress,
-                    cityAddress: cityAddress,
-                    congressDistrict: congressDistrict,
-                    programId: programId,
-                    isFirstGenStudent: isFirstGenStudent
-                },
-                dataType: "json",
-                success: function (res) {
-                    console.log("Server response:", res);
+            // Show loading indicator or disable button to prevent double submission
+            $("#submitRegistration").prop("disabled", true).text("Processing...");
 
-                    if (res && res[0] && res[0].mess === 1) {
-                        // Show success message with student number and password
-                        var confirmationHtml = `
-                            <div class="registration-confirmation">
-                                <h2>Registration Successful!</h2>
-                                <p>Your student account has been created. Please save your login credentials:</p>
-                                
-                                <div class="credentials-box">
-                                    <div class="credential-row">
-                                        <div class="credential-label">Student Number:</div>
-                                        <div class="credential-value">${res[0].studentNumber}</div>
-                                    </div>
-                                    <div class="credential-row">
-                                        <div class="credential-label">Password:</div>
-                                        <div class="credential-value">${res[0].password}</div>
-                                    </div>
-                                </div>
-                                
-                                <p class="important-note">Please save these credentials to log into your student account.</p>
-                                
-                                <div class="action-buttons">
-                                    <button id="continueToEnrollment" class="btn-primary">Continue to Enrollment</button>
-                                    <button id="printCredentials" class="btn-secondary">Print Credentials</button>
-                                </div>
-                            </div>
-                        `;
+            $.post("/Home/Registration_Page", {
+                firstname: firstName,
+                middlename: middleName,
+                lastname: lastName,
+                email: email,
+                phoneNum: phoneNum,
+                homeAddress: homeAddress,
+                cityAddress: cityAddress,
+                congressDistrict: congressDistrict,
+                isFirstGenStudent: isFirstGenStudent
+            }, function (res) {
+                console.log("Server response:", res);
+                $("#submitRegistration").prop("disabled", false).text("Register Now");
 
-                        // Replace form with confirmation
-                        $(".registration-form").html(confirmationHtml);
+                if (res && res[0] && res[0].mess === 1) {
+                    var confirmationHtml = `
+                        <div class="success-message">Registration Successful! Your account has been created.</div>
+                        <div class="credentials-box">
+                            <h3>Your Login Credentials</h3>
+                            <p><strong>Student Number:</strong> ${res[0].studentNumber}</p>
+                            <p><strong>Password:</strong> ${res[0].password}</p>
+                            <p>Please save these credentials to log into your student account.</p>
+                            <button id="printCredentials" class="btn-secondary">Print Credentials</button>
+                            <a href="/Home/Login_Page" class="btn-primary" style="margin-left: 10px;">Go to Login Page</a>
+                        </div>
+                    `;
 
-                        // Add event handler for continue button
-                        $("#continueToEnrollment").click(function () {
-                            window.location.href = "/Home/Enrollment_Form";
-                        });
+                    $(".registration-form").html(confirmationHtml);
 
-                        // Add print handler
-                        $("#printCredentials").click(function () {
-                            var printWindow = window.open('', '_blank');
-                            printWindow.document.write(`
-                                <html>
-                                    <head>
-                                        <title>Student Registration Credentials</title>
-                                        <style>
-                                            body { font-family: Arial, sans-serif; padding: 20px; }
-                                            .header { text-align: center; margin-bottom: 30px; }
-                                            .credentials { border: 1px solid #ccc; padding: 20px; margin: 20px auto; max-width: 500px; }
-                                            .credential-row { margin-bottom: 15px; }
-                                            .credential-label { font-weight: bold; }
-                                            .note { text-align: center; margin-top: 30px; font-style: italic; }
-                                        </style>
-                                    </head>
-                                    <body>
-                                        <div class="header">
-                                            <h1>Student Registration Credentials</h1>
-                                            <p>${new Date().toLocaleDateString()}</p>
-                                        </div>
-                                        <div class="credentials">
-                                            <div class="credential-row">
-                                                <div class="credential-label">Student Number:</div>
-                                                <div>${res[0].studentNumber}</div>
-                                            </div>
-                                            <div class="credential-row">
-                                                <div class="credential-label">Password:</div>
-                                                <div>${res[0].password}</div>
-                                            </div>
-                                        </div>
-                                        <div class="note">
-                                            <p>Please keep this information secure.</p>
-                                        </div>
-                                    </body>
-                                </html>
-                            `);
-                            printWindow.document.close();
-                            printWindow.print();
-                        });
-                    } else {
-                        // Registration failed
-                        var errorMsg = (res && res[0] && res[0].error) ?
-                            res[0].error : "Registration failed. Please try again.";
-                        alert(errorMsg);
-                    }
-                },
-                error: function (xhr, status, error) {
-                    console.error("AJAX Error:", xhr, status, error);
-                    alert("An error occurred. Please try again later.");
+                    $("#printCredentials").click(function () {
+                        var printWindow = window.open('', '_blank');
+                        printWindow.document.write(`
+                            <h2>Student Registration Credentials</h2>
+                            <p>Registration Date: ${new Date().toLocaleDateString()}</p>
+                            <p><strong>Student Number:</strong> ${res[0].studentNumber}</p>
+                            <p><strong>Password:</strong> ${res[0].password}</p>
+                            <p>Please keep this information secure.</p>
+                        `);
+                        printWindow.document.close();
+                        printWindow.print();
+                    });
+                } else {
+                    var errorMsg = (res && res[0] && res[0].error) ?
+                        res[0].error : "Registration failed. Please try again.";
+                    alert(errorMsg);
                 }
+            }).fail(function (xhr, status, error) {
+                console.error("POST Error:", xhr.responseText);
+                console.error("Status:", status);
+                console.error("Error:", error);
+                $("#submitRegistration").prop("disabled", false).text("Register Now");
+                alert("An error occurred. Please try again later.");
             });
         } else {
             alert("Please fill in all required fields correctly.");
         }
     });
-});
+
+    // Helper function to validate email format
+    function isValidEmail(email) {
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+}); 

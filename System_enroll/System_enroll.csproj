@@ -121,9 +121,15 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\Assign_ScheduleController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
+    <Compile Include="Controllers\FacultyController.cs" />
+    <Compile Include="Controllers\GradingController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\RevisesController.cs" />
+    <Compile Include="Controllers\SectionController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
+    <Compile Include="Controllers\StudentEnrollmentController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -136,8 +142,13 @@
     </Content>
     <Content Include="Content\About.css" />
     <Content Include="Content\Admin\AdminLayout.css" />
-    <Content Include="Content\Admin\Department.css" />
+    <Content Include="Content\Admin\Assign_Schedule.css" />
+    <Content Include="Content\Admin\ManageGrading.css" />
+    <Content Include="Content\Admin\Manage_Department.css" />
+    <Content Include="Content\Admin\Faculty.css" />
     <Content Include="Content\Admin\ManageEnrollee.css" />
+    <Content Include="Content\Admin\Manage_Courses.css" />
+    <Content Include="Content\Admin\Manage_Section.css" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-grid.rtl.css" />
@@ -159,13 +170,28 @@
     <Content Include="Content\Login_Page.css" />
     <Content Include="Content\Programs.css" />
     <Content Include="Content\Registration_Page.css" />
+    <Content Include="Content\Student\Manage_StudentEnrollment.css" />
+    <Content Include="Content\Student\Profile.css" />
     <Content Include="Content\Student\StudentLayout.css" />
     <Content Include="Content\Stylesheet1.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\Admin\admin\ManageAssign_Schedule.js" />
+    <Content Include="Scripts\Admin\admin\ManageCourses.js" />
+    <Content Include="Scripts\Admin\admin\ManageDepartment.js" />
+    <Content Include="Scripts\Admin\admin\ManageEnrollee.js" />
+    <Content Include="Scripts\Admin\admin\ManageFaculty.js" />
+    <Content Include="Scripts\Admin\admin\ManagePrograms.js" />
+    <Content Include="Scripts\Admin\admin\ManageProgram_course.js" />
+    <Content Include="Scripts\Admin\admin\ManageSection.js" />
+    <Content Include="Scripts\Admin\ManageAssign_Schedule.js" />
+    <Content Include="Scripts\Admin\ManageCourses.js" />
     <Content Include="Scripts\Admin\ManageDepartment.js" />
+    <Content Include="Scripts\Admin\ManageFaculty.js" />
     <Content Include="Scripts\Admin\ManagePrograms.js" />
+    <Content Include="Scripts\Admin\ManageProgram_course.js" />
+    <Content Include="Scripts\Admin\ManageSection.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -173,6 +199,8 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
+    <Content Include="Scripts\Grading\ManageGrading.js" />
+    <Content Include="Scripts\Grading\ViewStudentHistory.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />
     <Content Include="Scripts\jquery-3.7.0.slim.js" />
@@ -183,13 +211,14 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\Admin\ManageEnrollee.js" />
-    <Content Include="Scripts\Myscripts\Enrollment.js" />
     <Content Include="Scripts\Jquery\jquery-3.7.1.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\Myscripts\JavaScript.js" />
     <Content Include="Scripts\Myscripts\Login.js" />
-    <Content Include="Scripts\Myscripts\Login_Verification.js" />
     <Content Include="Scripts\Myscripts\Registration.js" />
+    <Content Include="Scripts\Student\ManageStudentEnrollment.js" />
+    <Content Include="Scripts\Student\ManageSubjectLoad.js" />
+    <Content Include="Scripts\Student\Profile.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -212,15 +241,24 @@
     <Content Include="Views\Admin\Admin_ManageEnrollees.cshtml" />
     <Content Include="Views\Course\Display_Dispartment.cshtml" />
     <Content Include="Views\Course\View_Programs.cshtml" />
+    <Content Include="Views\Course\Display_Courses.cshtml" />
+    <Content Include="Views\Course\View_Courses.cshtml" />
+    <Content Include="Views\Faculty\Display_Faculties.cshtml" />
+    <Content Include="Views\Assign_Schedule\Assign_Schedule.cshtml" />
+    <Content Include="Views\Grading\ManageGrading.cshtml" />
+    <Content Include="Views\Grading\ViewStudentHistory.cshtml" />
     <None Include="Views\Home\.editorconfig" />
-    <Content Include="Views\Home\Enrollment_Form.cshtml" />
     <Content Include="Views\Student\Student_Dashboard.cshtml" />
     <Content Include="Views\Shared\StudentLayout.cshtml" />
     <Content Include="Views\Shared\AdminLayout.cshtml" />
+    <Content Include="Views\Section\Display_Section.cshtml" />
+    <Content Include="Views\Student\Profile_Page.cshtml" />
+    <Content Include="Views\StudentEnrollment\Display_StudentEnrollment.cshtml" />
+    <Content Include="Views\StudentEnrollment\Display_SubjectLoad.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
-    <Folder Include="Views\Faculty\" />
+    <Folder Include="Views\Revises\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />

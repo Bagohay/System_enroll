@@ -13,24 +13,27 @@
         <nav>
             <ul>
                 <li>@Html.ActionLink("Dashboard", "Student_Dashboard", "Student", new { area = "" }, new { @class = "nav-link" })</li>
-                <li>@Html.ActionLink("Profile", "Profile", "Student", new { area = "" }, new { @class = "nav-link" })</li>
-                <li>@Html.ActionLink("Enrollment", "Enrollment_Form", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                <li>@Html.ActionLink("Profile", "Profile_Page", "Student", new { area = "" }, new { @class = "nav-link" })</li>
+                <li>@Html.ActionLink("Subject load", "Display_SubjectLoad", "StudentEnrollment", new { area = "" }, new { @class = "nav-link" })</li>
+                <li>@Html.ActionLink("Enrollment", "Display_StudentEnrollment", "StudentEnrollment", new { area = "" }, new { @class = "nav-link" })</li>
+                <li>@Html.ActionLink("Grades", "ViewStudentHistory", "Grading", new { area = "" }, new { @class = "nav-link" })</li>
                 <li>@Html.ActionLink("Logout", "Login_Page", "Home", new { area = "" }, new { @class = "nav-link" })</li>
             </ul>
         </nav>
     </div>
-    <header>
-        <div class="container">
+
+    <div class="main-content">
+        <header>
             <div class="header-content">
                 <!-- Header content can be customized if needed -->
             </div>
+        </header>
+
+        <div class="content-wrapper">
+            @RenderBody()
         </div>
-    </header>
-    <div class="container">
-        @RenderBody()
-    </div>
-    <footer>
-        <div class="container">
+
+        <footer>
             <div class="footer-content">
                 <div class="footer-section">
                     <h3>Contact Us</h3>
@@ -61,13 +64,12 @@
             <div class="copyright">
                 <p>&copy; @DateTime.Now.Year XYZ University. All Rights Reserved.</p>
             </div>
-        </div>
-    </footer>
+        </footer>
+    </div>
+
     <script>
-       
         document.querySelectorAll('.nav-link').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
-               
                 if (this.getAttribute('href').startsWith('#')) {
                     e.preventDefault();
                     const targetId = this.getAttribute('href').substring(1);
@@ -79,7 +81,6 @@
                         });
                     }
                 }
-                
             });
         });
     </script>

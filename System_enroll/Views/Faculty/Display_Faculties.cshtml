@@ -1,0 +1,101 @@
+﻿@{
+    ViewBag.Title = "Display Faculties";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+@section styles {
+    <link href="@Url.Content("~/Content/Admin/Faculty.css")" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet" />
+}
+
+<div class="container">
+    <header>
+        <h2>Faculty Management</h2>
+        <button id="addFacultyBtn" class="add-faculty-button">
+            Add Faculty
+        </button>
+    </header>
+
+    <div class="widget">
+        <table id="vwTblFaculties" class="faculty-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Specialization</th>
+                    <th>Contact Info</th>
+                    <th>Is Advisor</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="viewFaculty"></tbody>
+        </table>
+    </div>
+
+    <!-- Add Faculty Modal -->
+    <div id="addFacultyModal" class="modal">
+        <div class="modal-content widget">
+            <span class="modal-close">×</span>
+            <h3>Add Faculty</h3>
+            <form id="addFacultyForm">
+                <div class="form-group">
+                    <label for="addFacName">Name:</label>
+                    <input type="text" id="addFacName" class="form-input" required />
+                </div>
+                <div class="form-group">
+                    <label for="addFacSpecialization">Specialization:</label>
+                    <input type="text" id="addFacSpecialization" class="form-input" required />
+                </div>
+                <div class="form-group">
+                    <label for="addFacContactInfo">Contact Info:</label>
+                    <input type="text" id="addFacContactInfo" class="form-input" required />
+                </div>
+                <div class="form-group">
+                    <label for="addFacIsAdvisor">Is Advisor:</label>
+                    <select id="addFacIsAdvisor" class="form-select" required>
+                        <option value="Yes">Yes</option>
+                        <option value="No" selected>No</option>
+                    </select>
+                </div>
+                <button type="button" id="btnAddFaculty" class="faculty-btn save-faculty-btn">Add Faculty</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit Faculty Modal -->
+    <div id="editFacultyModal" class="modal">
+        <div class="modal-content widget">
+            <span class="modal-close">×</span>
+            <h3>Edit Faculty</h3>
+            <form id="editFacultyForm">
+                <input type="hidden" id="editFacultyId" />
+                <div class="form-group">
+                    <label for="editFacName">Name:</label>
+                    <input type="text" id="editFacName" class="form-input" required />
+                </div>
+                <div class="form-group">
+                    <label for="editFacSpecialization">Specialization:</label>
+                    <input type="text" id="editFacSpecialization" class="form-input" required />
+                </div>
+                <div class="form-group">
+                    <label for="editFacContactInfo">Contact Info:</label>
+                    <input type="text" id="editFacContactInfo" class="form-input" required />
+                </div>
+                <div class="form-group">
+                    <label for="editFacIsAdvisor">Is Advisor:</label>
+                    <select id="editFacIsAdvisor" class="form-select" required>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+                <button type="button" id="btnUpdateFaculty" class="faculty-btn save-faculty-btn">Update Faculty</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/Scripts/Jquery/jquery-3.7.1.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/Admin/ManageFaculty.js"></script>
+}

@@ -1,0 +1,69 @@
+﻿ @{
+    ViewBag.Title = "Manage Student Grades";
+    Layout = "~/Views/Shared/AdminLayout.cshtml"; // Adjust to your admin layout
+}
+
+@section styles {
+    <link href="@Url.Content("~/Content/Admin/ManageGrading.css")" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+}
+
+<div class="container">
+    <header class="header">
+        <h2>
+            <i class="fas fa-chalkboard-teacher"></i>
+            Manage Student Grades
+        </h2>
+        <button type="button" class="btn-add" onclick="window.history.back()">
+            Back
+        </button>
+    </header>
+
+    <!-- Notification Area -->
+    <div id="notificationArea"></div>
+
+    <!-- Students List -->
+    <div class="widget">
+        <table id="studentsTable" class="section-table">
+            <thead>
+                <tr>
+                    <th>Student Number</th>
+                    <th>Name</th>
+                    <th>Program</th>
+                    <th>School Year</th>
+                    <th>Semester</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="studentsList"></tbody>
+        </table>
+    </div>
+
+    <!-- Subjects for Grading -->
+    <div class="widget" id="gradingSection" style="display: none;">
+        <table id="subjectsTable" class="section-table">
+            <thead>
+                <tr>
+                    <th>Course Code</th>
+                    <th>Course Name</th>
+                    <th>Units</th>
+                    <th>Grade</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="subjectsList"></tbody>
+        </table>
+        <button type="button" id="btnFinalizeGrades" class="section-btn">
+            <i class="fas fa-check-circle"></i>
+            <span id="btnTextFinalize">Finalize Grades</span>
+            <div class="loading-spinner" id="loadingSpinnerFinalize" style="display: none;"></div>
+        </button>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/Scripts/Jquery/jquery-3.7.1.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/Grading/ManageGrading.js"></script>
+}

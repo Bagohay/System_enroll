@@ -1,0 +1,301 @@
+﻿    @{
+    ViewBag.Title = "Student Enrollment";
+    Layout = "~/Views/Shared/StudentLayout.cshtml";
+    var studentNumber = Session["UserNumber"]?.ToString() ?? "";
+}
+
+@section styles {
+    <link href="@Url.Content("~/Content/Student/Manage_StudentEnrollment.css")" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            overflow: auto;
+        }
+
+            .modal.show {
+                display: block;
+            }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 5% auto;
+            padding: 20px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 1200px;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+        }
+
+            .modal-close:hover {
+                color: #000;
+            }
+
+        .section-group {
+            margin-bottom: 30px;
+        }
+
+            .section-group h3 {
+                font-size: 1.5em;
+                margin-bottom: 15px;
+                color: #2d3748;
+            }
+
+        .section-schedule-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+            .section-schedule-table th, .section-schedule-table td {
+                padding: 10px;
+                border: 1px solid #e2e8f0;
+                text-align: left;
+            }
+
+            .section-schedule-table th {
+                background-color: #f7fafc;
+                font-weight: 600;
+               color : #2d3748;
+            }
+
+            .section-schedule-table .description {
+                min-width: 200px;
+            }
+
+            .section-schedule-table .numeric {
+                text-align: center;
+                width: 80px;
+            }
+
+            .section-schedule-table .time-day {
+                min-width: 250px;
+            }
+
+            .section-schedule-table tbody tr:hover {
+                background-color: #f7fafc;
+            }
+
+            .section-schedule-table tfoot {
+                font-weight: 600;
+                background-color: #edf2f7;
+            }
+
+        .total-row th {
+            text-align: right;
+        }
+
+        .total-row .numeric {
+            text-align: center;
+        }
+    </style>
+}
+
+<div class="container">
+    <header>
+        <h2 style="color: #2d3748; margin-bottom: 20px;">
+            <i class="fas fa-graduation-cap" style="margin-right: 10px;"></i>
+            Student Enrollment
+        </h2>
+    </header>
+
+    <div id="enrollmentStatusCard" class="enrollment-status-card">
+        <div class="status-header">
+            <i id="statusIcon" class="fas fa-user-graduate status-icon"></i>
+            <div>
+                <h3 id="statusTitle" class="status-title">Checking Enrollment Status...</h3>
+                <p id="statusMessage" class="status-message">Please wait while we verify your enrollment eligibility.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="notificationArea"></div>
+
+    <div id="enrollmentProgress" class="enrollment-progress">
+        <h4 style="margin-bottom: 20px; color: #4a5568;">Enrollment Progress</h4>
+        <div class="progress-steps">
+            <div class="progress-step">
+                <div class="step-circle" id="step1">1</div>
+                <div class="step-label">Fill Form</div>
+            </div>
+            <div class="progress-step">
+                <div class="step-circle" id="step2">2</div>
+                <div class="step-label">Submit</div>
+            </div>
+            <div class="progress-step">
+                <div class="step-circle" id="step3">3</div>
+                <div class="step-label">Admin Review</div>
+            </div>
+            <div class="progress-step">
+                <div class="step-circle" id="step4">4</div>
+                <div class="step-label">Approved</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="widget">
+        <div class="widget-header">
+            <div class="widget-icon">
+                <i class="fas fa-edit"></i>
+            </div>
+            <h3 class="widget-title">Enrollment Form</h3>
+        </div>
+
+        <form id="enrollmentForm">
+            <div class="form-group">
+                <label for="studentNumber">
+                    <i class="fas fa-id-card" style="margin-right: 5px;"></i>
+                    Student Number
+                </label>
+                <input type="text" id="studentNumber" class="form-input" value="@studentNumber" readonly />
+            </div>
+
+            <div class="form-group">
+                <label for="programId">
+                    <i class="fas fa-book" style="margin-right: 5px;"></i>
+                    Program
+                </label>
+                <select id="programId" class="form-select" required>
+                    <option value="">Select Program</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="schoolYear">
+                    <i class="fas fa-calendar-alt" style="margin-right: 5px;"></i>
+                    School Year
+                </label>
+                <input type="text" id="schoolYear" class="form-input" placeholder="e.g., 2024-2025" required />
+            </div>
+
+            <div class="form-group">
+                <label for="semester">
+                    <i class="fas fa-calendar" style="margin-right: 5px;"></i>
+                    Semester
+                </label>
+                <select id="semester" class="form-select" required>
+                    <option value="">Select Semester</option>
+                    <option value="First">First</option>
+                    <option value="Second">Second</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="yearLevel">
+                    <i class="fas fa-layer-group" style="margin-right: 5px;"></i>
+                    Year Level
+                </label>
+                <select id="yearLevel" class="form-select" required>
+                    <option value="">Select Year Level</option>
+                    <option value="1">1st Year</option>
+                    <option value="2">2nd Year</option>
+                    <option value="3">3rd Year</option>
+                    <option value="4">4th Year</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="isRegular">
+                    <i class="fas fa-user-tag" style="margin-right: 5px;"></i>
+                    Student Type
+                </label>
+                <select id="isRegular" class="form-select" required>
+                    <option value="true">Regular</option>
+                    <option value="false">Irregular</option>
+                </select>
+            </div>
+
+            <div class="form-group" id="subjectSelectionGroup" style="display: none;">
+                <label>
+                    <i class="fas fa-list-check" style="margin-right: 5px;"></i>
+                    Subject Selection
+                </label>
+                <table id="subjectSelectionTable" class="section-schedule-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 60px;">Select</th>
+                            <th>Course Code</th>
+                            <th>Course Name</th>
+                            <th>Units</th>
+                            <th>Time</th>
+                            <th>Day</th>
+                            <th>Room</th>
+                            <th>Program</th>
+                            <th>Section</th>
+                        </tr>
+                    </thead>
+                    <tbody id="subjectSelection"></tbody>
+                </table>
+            </div>
+
+            <button type="button" id="btnEnroll" class="section-btn">
+                <i class="fas fa-paper-plane"></i>
+                <span id="btnText">Enroll Student</span>
+                <div class="loading-spinner" id="loadingSpinner"></div>
+            </button>
+        </form>
+    </div>
+
+    <div class="widget">
+        <div class="widget-header">
+            <div class="widget-icon">
+                <i class="fas fa-list"></i>
+            </div>
+            <h3 class="widget-title">My Enrolled Subjects</h3>
+        </div>
+        <button id="viewEnrolledSubjectsBtn" class="section-btn">
+            <i class="fas fa-eye"></i> View Enrolled Subjects
+        </button>
+    </div>
+
+    <div id="viewEnrolledSubjectsModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <h2>My Enrolled Subjects</h2>
+            <div id="groupedEnrolledSubjects">
+                <table id="enrolledSubjectsTable" class="section-schedule-table">
+                    <thead>
+                        <tr>
+                            <th>Course Code</th>
+                            <th>Course Name</th>
+                            <th>Description</th>
+                            <th>Units</th>
+                            <th>Time</th>
+                            <th>Day</th>
+                            <th>Room</th>
+                            <th>Program</th>
+                            <th>Section</th>
+                        </tr>
+                    </thead>
+                    <tbody id="enrolledSubjectsBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/Scripts/Jquery/jquery-3.7.1.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/Student/ManageStudentEnrollment.js"></script>
+    <script>
+        var loggedInStudentNumber = "@studentNumber";
+    </script>
+}

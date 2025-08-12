@@ -6,7 +6,6 @@
 @section styles {
     <link href="@Url.Content("~/Content/ManageEnrollee.css")" rel="stylesheet" type="text/css" />
     <style>
-        /* Header styles to match screenshot */
         header {
             background-color: #2c3e50;
             padding: 10px 20px;
@@ -36,7 +35,6 @@
                     text-decoration: underline;
                 }
 
-        /* Container and section styles */
         .container {
             max-width: none;
             margin: 0;
@@ -62,7 +60,6 @@
                 background-color: #0069d9;
             }
 
-        /* Add New Program button to match screenshot */
         .btn-add-new {
             background-color: #28a745;
             color: white;
@@ -77,7 +74,6 @@
                 background-color: #218838;
             }
 
-        /* Table styles */
         .table {
             width: 100%;
             border-collapse: collapse;
@@ -127,7 +123,6 @@
                 color: #333;
             }
 
-        /* Modal styles */
         .modal {
             display: none;
             position: fixed;
@@ -197,6 +192,10 @@
                 box-sizing: border-box;
             }
 
+            .modal-body .checkbox-group {
+                margin-bottom: 10px;
+            }
+
         .modal-footer {
             display: flex;
             justify-content: flex-end;
@@ -242,7 +241,6 @@
         </div>
     }
 
-    <!-- Add hidden input to store the department ID from ViewBag -->
     <input type="hidden" id="hiddenDeptId" value="@ViewBag.DeptId" />
 
     <div class="program-section">
@@ -297,6 +295,39 @@
             <div class="modal-footer">
                 <button class="btn-cancel" onclick="closeAddProgramModal()">Cancel</button>
                 <button class="btn-save" onclick="addProgram()">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Course to Program Modal -->
+    <div id="addCourseModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add Course to Program</h2>
+                <span class="close" onclick="closeAddCourseModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="programId" />
+                <label for="courseId">Course</label>
+                <select id="courseId" required>
+                    <option value="">Select a course</option>
+                    <!-- Courses will be populated via JavaScript -->
+                </select>
+
+                <label for="semester">Semester</label>
+                <input type="number" id="semester" placeholder="Enter semester (e.g., 1 or 2)" min="1" max="2" required>
+
+                <label for="yearLevel">Year Level</label>
+                <input type="number" id="yearLevel" placeholder="Enter year level (e.g., 1-5)" min="1" max="5" required>
+
+                <div class="checkbox-group">
+                    <label><input type="checkbox" id="isRequired" checked> Required</label>
+                    <label><input type="checkbox" id="isElective"> Elective</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-cancel" onclick="closeAddCourseModal()">Cancel</button>
+                <button class="btn-save" onclick="addCourseToProgram()">Save</button>
             </div>
         </div>
     </div>

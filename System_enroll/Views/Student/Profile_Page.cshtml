@@ -1,0 +1,137 @@
+﻿@{
+    ViewBag.Title = "Profile";
+    Layout = "~/Views/Shared/StudentLayout.cshtml";
+}
+
+@section styles {
+    <link href="@Url.Content("~/Content/Student/Profile.css")" rel="stylesheet" type="text/css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+}
+
+<div class="profile-container">
+    <div class="profile-header">
+        <h2>User Profile</h2>
+    </div>
+
+    <div class="profile-card">
+        <h3 class="user-name">@(Session["UserFullName"] != null ? Session["UserFullName"].ToString() : "N/A")</h3>
+
+        <div class="profile-details">
+            <div class="detail-item">
+                <span class="detail-label">Student Number</span>
+                <div class="detail-value">@(Session["UserNumber"] != null ? Session["UserNumber"].ToString() : "N/A")</div>
+            </div>
+
+            <div class="detail-item">
+                <span class="detail-label">Email</span>
+                <div class="detail-value">@(Session["UserEmail"] != null ? Session["UserEmail"].ToString() : "N/A")</div>
+            </div>
+
+            <div class="detail-item">
+                <span class="detail-label">Phone</span>
+                <div class="detail-value">@(Session["UserPhone"] != null ? Session["UserPhone"].ToString() : "N/A")</div>
+            </div>
+
+            <div class="detail-item">
+                <span class="detail-label">Home Address</span>
+                <div class="detail-value">@(Session["UserHomeAddress"] != null ? Session["UserHomeAddress"].ToString() : "N/A")</div>
+            </div>
+
+            <div class="detail-item">
+                <span class="detail-label">City Address</span>
+                <div class="detail-value">@(Session["UserCityAddress"] != null ? Session["UserCityAddress"].ToString() : "N/A")</div>
+            </div>
+
+            @if (Session["UserCongressDistrict"] != null && !string.IsNullOrEmpty(Session["UserCongressDistrict"].ToString()))
+            {
+                <div class="detail-item">
+                    <span class="detail-label">Congress District</span>
+                    <div class="detail-value">@Session["UserCongressDistrict"]</div>
+                </div>
+            }
+
+            <div class="detail-item">
+                <span class="detail-label">First Generation Student</span>
+                <div class="detail-value">@(Session["UserGenStudent"] != null ? Session["UserGenStudent"].ToString() : "N/A")</div>
+            </div>
+
+            <div class="detail-item">
+                <span class="detail-label">Role</span>
+                <div class="detail-value">@(Session["UserRole"] != null ? Session["UserRole"].ToString() : "N/A")</div>
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <button class="btn btn-primary" onclick="openEditModal()">Edit Profile</button>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Profile Modal -->
+<div id="editProfileModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Edit Profile</h3>
+            <span class="close" onclick="closeEditModal()">&times;</span>
+        </div>
+
+        <form id="editProfileForm">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <input type="text" id="firstName" name="firstName" class="form-control" value="@(Session["UserFirstName"] != null ? Session["UserFirstName"].ToString() : "")" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="middleName">Middle Name</label>
+                    <input type="text" id="middleName" name="middleName" class="form-control" value="@(Session["UserMiddleName"] != null ? Session["UserMiddleName"].ToString() : "")">
+                </div>
+
+                <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" id="lastName" name="lastName" class="form-control" value="@(Session["UserLastName"] != null ? Session["UserLastName"].ToString() : "")" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" class="form-control" value="@(Session["UserEmail"] != null ? Session["UserEmail"].ToString() : "")" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" class="form-control" value="@(Session["UserPhone"] != null ? Session["UserPhone"].ToString() : "")" required>
+            </div>
+
+            <div class="form-group">
+                <label for="homeAddress">Home Address</label>
+                <input type="text" id="homeAddress" name="homeAddress" class="form-control" value="@(Session["UserHomeAddress"] != null ? Session["UserHomeAddress"].ToString() : "")" required>
+            </div>
+
+            <div class="form-group">
+                <label for="cityAddress">City Address</label>
+                <input type="text" id="cityAddress" name="cityAddress" class="form-control" value="@(Session["UserCityAddress"] != null ? Session["UserCityAddress"].ToString() : "")" required>
+            </div>
+
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="congressDistrict">Congress District</label>
+                    <input type="text" id="congressDistrict" name="congressDistrict" class="form-control" value="@(Session["UserCongressDistrict"] != null ? Session["UserCongressDistrict"].ToString() : "")">
+                </div>
+
+                <div class="form-group">
+                    <label for="firstGenStudent">First Generation Student</label>
+                    <select id="firstGenStudent" name="firstGenStudent" class="form-control">
+                        <option value="true" @(Session["UserGenStudent"] != null && Session["UserGenStudent"].ToString() == "True" ? "selected" : "")>Yes</option>
+                        <option value="false" @(Session["UserGenStudent"] != null && Session["UserGenStudent"].ToString() == "False" ? "selected" : "")>No</option>
+                    </select>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-success">Save Changes</button>
+        </form>
+    </div>
+</div>
+
+<script src="~/Scripts/Jquery/jquery-3.7.1.js"></script>
+<script src="~/Scripts/Student/Profile.js"></script>

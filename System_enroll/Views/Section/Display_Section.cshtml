@@ -1,0 +1,78 @@
+﻿@{
+    ViewBag.Title = "Display_Section";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+@section styles {
+    <link href="@Url.Content("~/Content/Admin/Manage_Section.css")" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet" />
+}
+
+<div class="container"> 
+    <header>
+        <h2>Section Management</h2>
+        <button id="addSectionBtn" class="add-section-button">Add New Section</button>
+    </header>
+
+    <div class="widget">
+        <table id="vwTblSections" class="section-table">
+            <thead>
+                <tr>
+                    <th>Section Name</th>
+                    <th>Program</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="viewSection"></tbody>
+        </table>
+    </div>
+
+    <!-- Add Section Modal -->
+    <div id="addSectionModal" class="modal">
+        <div class="modal-content widget">
+            <span class="modal-close">×</span>
+            <h3>Add New Section</h3>
+            <form id="addSectionForm">
+                <div class="form-group">
+                    <label for="addSecName">Section Name:</label>
+                    <input type="text" id="addSecName" class="form-input" required />
+                </div>
+                <div class="form-group">
+                    <label for="addSecProgramId">Program:</label>
+                    <select id="addSecProgramId" class="form-select" required>
+                        <option value="">Select Program</option>
+                    </select>
+                </div>
+                <button type="button" id="btnAddSection" class="section-btn save-section-btn">Add Section</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit Section Modal -->
+    <div id="editSectionModal" class="modal">
+        <div class="modal-content widget">
+            <span class="modal-close">×</span>
+            <h3>Edit Section</h3>
+            <form id="editSectionForm">
+                <input type="hidden" id="editSectionId" />
+                <div class="form-group">
+                    <label for="editSecName">Section Name:</label>
+                    <input type="text" id="editSecName" class="form-input" required />
+                </div>
+                <div class="form-group">
+                    <label for="editSecProgramId">Program:</label>
+                    <select id="editSecProgramId" class="form-select" required>
+                        <option value="">Select Program</option>
+                    </select>
+                </div>
+                <button type="button" id="btnUpdateSection" class="section-btn save-section-btn">Update Section</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/Scripts/Jquery/jquery-3.7.1.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/Admin/ManageSection.js"></script>
+}

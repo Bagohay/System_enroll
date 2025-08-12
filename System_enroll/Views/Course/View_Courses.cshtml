@@ -1,0 +1,134 @@
+﻿@{
+    ViewBag.Title = "View Courses";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+@section styles {
+    <link href="@Url.Content("~/Content/ManageEnrollee.css")" rel="stylesheet" type="text/css" />
+    <style>
+        header {
+            background-color: #2c3e50;
+            padding: 10px 20px;
+            box-shadow: none;
+        }
+
+            header .container {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            header h1 {
+                color: white;
+                font-size: 1.5em;
+                margin: 0;
+            }
+
+        .container {
+            max-width: none;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .course-section {
+            margin: 20px 0;
+        }
+
+        .btn-back {
+            background-color: #6c757d;
+            color: white;
+            padding: 8px 12px;
+            text-decoration: none;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+            .btn-back:hover {
+                background-color: #5a6268;
+            }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #ffffff;
+            margin-bottom: 30px;
+            border: 1px solid #ddd;
+        }
+
+            .table th, .table td {
+                padding: 10px;
+                text-align: left;
+                border: 1px solid #ddd;
+            }
+
+            .table th {
+                background-color: #f2f2f2;
+                font-weight: normal;
+                text-transform: uppercase;
+                font-size: 0.9em;
+            }
+
+            .table tr:hover {
+                background-color: #f8f9fa;
+            }
+
+            .table .total-row {
+                font-weight: bold;
+            }
+
+        h3 {
+            color: #333;
+            font-size: 1.25em;
+            margin: 20px 0 10px;
+        }
+
+        .year-header {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin: 20px 0 10px;
+            text-transform: uppercase;
+        }
+
+        .semester-header {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin: 15px 0 5px;
+            text-transform: uppercase;
+        }
+
+        .error-message {
+            color: #dc3545;
+            font-size: 1em;
+            margin: 10px 0;
+        }
+    </style>
+}
+
+<header>
+    <h1>COURSES</h1>
+</header>
+
+<div class="container">
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="error-message">
+            @TempData["ErrorMessage"]
+        </div>
+    }
+
+    <input type="hidden" id="hiddenProgramId" value="@ViewBag.ProgramId" />
+    <input type="hidden" id="hiddenDeptId" value="@ViewBag.DeptId" />
+
+    <div class="course-section">
+        <a href="/Course/View_Programs?deptId=@ViewBag.DeptId" class="btn-back">Back to Programs</a>
+    </div>
+
+    <section id="courseList">
+        <h3>List of Courses</h3>
+        <div id="courseTables"></div>
+    </section>
+</div>
+
+<script src="~/Scripts/Jquery/jquery-3.7.1.js"></script>
+<script src="~/Scripts/Admin/ManageProgram_course.js"></script>

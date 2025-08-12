@@ -1,0 +1,287 @@
+﻿@{
+    ViewBag.Title = "Display_Courses";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+@section styles {
+    <link href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="@Url.Content("~/Content/Admin/Manage_Courses.css")" rel="stylesheet" type="text/css" />
+    <style>
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #2c3e50;
+            font-size: 1.6em;
+            margin: 0;
+        }
+
+        .add-course-button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+            .add-course-button:hover {
+                background-color: #0069d9;
+            }
+
+        .widget {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .course-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #ffffff;
+        }
+
+            .course-table th,
+            .course-table td {
+                padding: 12px 20px;
+                text-align: left;
+                border-bottom: 1px solid #e0e0e0;
+            }
+
+            .course-table th {
+                background-color: #2c3e50;
+                color: #ffffff;
+                font-weight: 600;
+                white-space: nowrap;
+            }
+
+            .course-table tr:hover {
+                background-color: #f4f6f9;
+            }
+
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .course-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+            color: #ffffff;
+            transition: background-color 0.2s;
+            white-space: nowrap;
+        }
+
+        .view-prerequisites-btn {
+            background-color: #007bff;
+        }
+
+            .view-prerequisites-btn:hover {
+                background-color: #0056b3;
+            }
+
+        .edit-btn {
+            background-color: #34495e;
+        }
+
+            .edit-btn:hover {
+                background-color: #2c3e50;
+            }
+
+        .delete-btn {
+            background-color: #e74c3c;
+        }
+
+            .delete-btn:hover {
+                background-color: #c0392b;
+            }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            margin: 50px auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+            .modal-content h3 {
+                margin-top: 0;
+                margin-bottom: 15px;
+                color: #2c3e50;
+            }
+
+            .modal-content input,
+            .modal-content select,
+            .modal-content textarea {
+                width: 100%;
+                padding: 10px;
+                margin: 10px 0;
+                box-sizing: border-box;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+            }
+
+                .modal-content select[multiple] {
+                    height: 200px;
+                }
+
+            .modal-content .button-group {
+                display: flex;
+                justify-content: flex-end;
+                gap: 10px;
+                margin-top: 15px;
+            }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+        }
+
+            .btn-primary:hover {
+                background-color: #0056b3;
+            }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+
+            .btn-secondary:hover {
+                background-color: #5a6268;
+            }
+
+        .dataTables_wrapper {
+            width: 100%;
+            overflow-x: auto;
+        }
+    </style>
+}
+
+<div class="container">
+    <header>
+        <h1>Course Management</h1>
+        <button class="add-course-button" onclick="openModal()">Add New Course</button>
+    </header>
+
+    <div class="widget">
+        <table class="course-table" id="courseTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Course Code</th>
+                    <th>Course Name</th>
+                    <th>Units</th>
+                    <th>Year Level</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="courseTableBody">
+                <!-- Course data will be loaded here dynamically -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Add Course Modal -->
+<div id="addCourseModal" class="modal">
+    <div class="modal-content">
+        <h3>Add New Course</h3>
+        <input type="text" id="courseCode" placeholder="Enter course code" />
+        <input type="text" id="courseName" placeholder="Enter course name" />
+        <input type="number" id="units" placeholder="Enter units (e.g., 3.0)" step="0.1" min="0" />
+        <input type="number" id="yearLevel" placeholder="Enter year level (optional)" min="1" max="5" />
+        <textarea id="description" placeholder="Enter description (optional)" rows="4"></textarea>
+        <input type="number" id="lecHours" placeholder="Enter lecture hours (optional)" min="0" />
+        <input type="number" id="labHours" placeholder="Enter lab hours (optional)" min="0" />
+        <input type="number" id="totalHours" placeholder="Enter total hours (optional)" min="0" />
+        <div class="button-group">
+            <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+            <button class="btn btn-primary" onclick="addCourse()">Add</button>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Course Modal -->
+<div id="editCourseModal" class="modal">
+    <div class="modal-content">
+        <h3>Edit Course</h3>
+        <input type="hidden" id="editCourseId" />
+        <input type="text" id="editCourseCode" placeholder="Enter course code" />
+        <input type="text" id="editCourseName" placeholder="Enter course name" />
+        <input type="number" id="editUnits" placeholder="Enter units (e.g., 3.0)" step="0.1" min="0" />
+        <input type="number" id="editYearLevel" placeholder="Enter year level (optional)" min="1" max="5" />
+        <textarea id="editDescription" placeholder="Enter description (optional)" rows="4"></textarea>
+        <input type="number" id="editLecHours" placeholder="Enter lecture hours (optional)" min="0" />
+        <input type="number" id="editLabHours" placeholder="Enter lab hours (optional)" min="0" />
+        <input type="number" id="editTotalHours" placeholder="Enter total hours (optional)" min="0" />
+        <div class="button-group">
+            <button class="btn btn-secondary" onclick="closeEditModal()">Cancel</button>
+            <button class="btn btn-primary" onclick="updateCourse()">Save</button>
+        </div>
+    </div>
+</div>
+
+<!-- Add Prerequisites Modal -->
+<div id="addPrerequisiteModal" class="modal">
+    <div class="modal-content">
+        <h3>Add Prerequisites for <span id="prereqCourseName"></span></h3>
+        <input type="hidden" id="prereqCourseId" />
+        <select id="prerequisites" multiple></select>
+        <div class="button-group">
+            <button class="btn btn-secondary" onclick="closePrerequisiteModal()">Cancel</button>
+            <button class="btn btn-primary" onclick="addPrerequisites()">Add</button>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/Scripts/Jquery/jquery-3.7.1.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script>
+        function handleAjaxError(jqXHR, textStatus, errorThrown, targetElement) {
+            console.error(`AJAX Error: ${textStatus}, ${errorThrown}`);
+            $(targetElement).html(`<tr><td colspan="6">Error loading data: ${textStatus}</td></tr>`);
+        }
+    </script>
+    <script src="~/Scripts/Admin/ManageCourses.js"></script>
+}}

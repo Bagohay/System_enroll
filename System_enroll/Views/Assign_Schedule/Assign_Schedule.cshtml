@@ -1,0 +1,208 @@
+﻿@{
+    ViewBag.Title = "Assign_Schedule";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+@section styles {
+    <link href="@Url.Content("~/Content/Admin/Assign_Schedule.css")" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet" />
+}
+
+<div class="container">
+    <header>
+        <h2>Schedule Management</h2>
+        <div class="header-buttons">
+            <button id="addScheduleBtn" class="add-schedule-button">
+                Add Schedule
+            </button>
+            <button id="viewSchedulesBtn" class="add-schedule-button">
+                View Schedules
+            </button>
+        </div>
+    </header>
+
+    <div class="widget">
+        <div class="schedule-table-container">
+            <table id="vwTblSchedules" class="schedule-table">
+                <thead>
+                    <tr>
+                        <th>MIS Code</th>
+                        <th>Assign To</th>
+                        <th>Course Name</th>
+                        <th>Section</th>
+                        <th>Day</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                        <th>Room</th>
+                        <th>Faculty Name</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="viewSchedule"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="addScheduleModal" class="modal">
+        <div class="modal-content widget">
+            <span class="modal-close">×</span>
+            <h3>Add Schedule</h3>
+            <form id="addScheduleForm">
+                <div class="form-group">
+                    <label for="programId">Program:</label>
+                    <select id="programId" class="form-select" required></select>
+                </div>
+                <div class="form-group">
+                    <label for="courseId">Course:</label>
+                    <select id="courseId" class="form-select" required></select>
+                </div>
+                <div class="form-group">
+                    <label for="secId">Section:</label>
+                    <select id="secId" class="form-select" required></select>
+                </div>
+                <div class="form-group">
+                    <label for="facId">Faculty (Optional):</label>
+                    <select id="facId" class="form-select"></select>
+                </div>
+                <div class="form-group">
+                    <h4>Add Schedule Details</h4>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 150px;">
+                            <label for="day">Day:</label>
+                            <select id="day" class="form-select">
+                                <option value="" disabled selected>Select a day</option>
+                                <option value="Monday">Monday</option>
+                                <option value="Tuesday">Tuesday</option>
+                                <option value="Wednesday">Wednesday</option>
+                                <option value="Thursday">Thursday</option>
+                                <option value="Friday">Friday</option>
+                                <option value="Saturday">Saturday</option>
+                                <option value="Sunday">Sunday</option>
+                            </select>
+                        </div>
+                        <div style="flex: 1; min-width: 120px;">
+                            <label for="startTime">Start Time:</label>
+                            <input type="time" id="startTime" class="form-input" required />
+                        </div>
+                        <div style="flex: 1; min-width: 120px;">
+                            <label for="endTime">End Time:</label>
+                            <input type="time" id="endTime" class="form-input" required />
+                        </div>
+                        <div style="flex: 1; min-width: 120px;">
+                            <label for="room">Room (Optional):</label>
+                            <input type="text" id="room" class="form-input" maxlength="50" />
+                        </div>
+                        <div style="flex: 0; align-self: flex-end;">
+                            <button type="button" id="addScheduleDetailBtn" class="schedule-btn" style="background-color: #28a745;">Add Detail</button>
+                        </div>
+                    </div>
+                    <table class="schedule-details-table" style="margin-top: 10px;">
+                        <thead>
+                            <tr>
+                                <th>Day</th>
+                                <th>Start Time</th>
+                                <th>End Time</th>
+                                <th>Room</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="scheduleDetailsBody"></tbody>
+                    </table>
+                </div>
+                <button type="button" id="checkSchedulesBtn" class="schedule-btn">Check Schedules</button>
+                <div id="sectionSchedules" style="margin-top: 20px; max-height: 200px; overflow-y: auto;">
+                    <h4>Existing Schedules for Section</h4>
+                    <table id="sectionSchedulesTable" class="schedule-table">
+                        <thead>
+                            <tr>
+                                <th>MIS Code</th>
+                                <th>Course Name</th>
+                                <th>Day</th>
+                                <th>Start Time</th>
+                                <th>End Time</th>
+                                <th>Room</th>
+                            </tr>
+                        </thead>
+                        <tbody id="sectionSchedulesBody"></tbody>
+                    </table>
+                </div>
+                <button type="button" id="btnSaveSchedule" class="schedule-btn save-schedule-btn">Save Schedule</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="editScheduleModal" class="modal">
+        <div class="modal-content widget">
+            <span class="modal-close">×</span>
+            <h3>Edit Schedule</h3>
+            <form id="editScheduleForm">
+                <input type="hidden" id="editSchedId" />
+                <div class="form-group">
+                    <label for="editFacId">Faculty (Optional):</label>
+                    <select id="editFacId" class="form-select"></select>
+                </div>
+                <div class="form-group">
+                    <h4>Edit Schedule Details</h4>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 150px;">
+                            <label for="editDay">Day:</label>
+                            <select id="editDay" class="form-select">
+                                <option value="" disabled selected>Select a day</option>
+                                <option value="Monday">Monday</option>
+                                <option value="Tuesday">Tuesday</option>
+                                <option value="Wednesday">Wednesday</option>
+                                <option value="Thursday">Thursday</option>
+                                <option value="Friday">Friday</option>
+                                <option value="Saturday">Saturday</option>
+                                <option value="Sunday">Sunday</option>
+                            </select>
+                        </div>
+                        <div style="flex: 1; min-width: 120px;">
+                            <label for="editStartTime">Start Time:</label>
+                            <input type="time" id="editStartTime" class="form-input" required />
+                        </div>
+                        <div style="flex: 1; min-width: 120px;">
+                            <label for="editEndTime">End Time:</label>
+                            <input type="time" id="editEndTime" class="form-input" required />
+                        </div>
+                        <div style="flex: 1; min-width: 120px;">
+                            <label for="editRoom">Room (Optional):</label>
+                            <input type="text" id="editRoom" class="form-input" maxlength="50" />
+                        </div>
+                        <div style="flex: 0; align-self: flex-end;">
+                            <button type="button" id="addEditScheduleDetailBtn" class="schedule-btn" style="background-color: #28a745;">Add Detail</button>
+                        </div>
+                    </div>
+                    <table class="schedule-details-table" style="margin-top: 10px;">
+                        <thead>
+                            <tr>
+                                <th>Day</th>
+                                <th>Start Time</th>
+                                <th>End Time</th>
+                                <th>Room</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="editScheduleDetailsBody"></tbody>
+                    </table>
+                </div>
+                <button type="button" id="btnUpdateSchedule" class="schedule-btn save-schedule-btn">Update Schedule</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="viewSchedulesModal" class="modal">
+        <div class="modal-content widget">
+            <span class="modal-close">×</span>
+            <h3>View Schedules</h3>
+            <div class="grouped-schedules-container" id="groupedSchedules">
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/Scripts/Jquery/jquery-3.7.1.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/Admin/ManageAssign_Schedule.js"></script>
+}

@@ -1,37 +1,33 @@
 ﻿$(document).ready(function () {
-    $("#loginBtn").click(function (e) {
-        e.preventDefault();
+    $('#loginBtn').click(function () {
+        var username = $('#username').val();
+        var password = $('#password').val();
 
-        var username = $("#username").val().trim();
-        var password = $("#password").val().trim();
-
-        $("#errorMessage").text(""); 
-
-        var isValid = true;
-        if (!username) {
-            $("#errorMessage").text("Student number is required.");
-            isValid = false;
-        }
-        if (!password) {
-            $("#errorMessage").text("Password is required.");
-            isValid = false;
+        if (!username || !password) {
+            $('#errorMessage').text('Please enter both username and password.');
+            return;
         }
 
-        if (isValid) {
-            $.post("../Home/Login_Page", {
-                user: username,
-                password: password
-            }, function (res) {
-                if (res.success) {
-                    
-                    window.location.href = res.redirectUrl;
-                } else {
-                    
-                    $("#errorMessage").text(res.error || "Invalid username or password.");
-                }
-            }).fail(function () {
-                $("#errorMessage").text("An error occurred. Please try again.");
-            });
+        $('#errorMessage').text('');
+
+        $.post('/Home/Login_Page', {
+            user: username,
+            password: password
+        }, function (response) {
+            if (response.success) {
+                window.location.href = response.redirectUrl;
+            } else {
+                $('#errorMessage').text(response.error || 'Login failed. Please try again.');
+            }
+        }).fail(function (xhr, status, error) {
+            $('#errorMessage').text('An error occurred. Please try again later.');
+            console.error("Login error:", error);
+        });
+    });
+
+    $('#password').keypress(function (e) {
+        if (e.which == 13) {
+            $('#loginBtn').click();
         }
     });
 });

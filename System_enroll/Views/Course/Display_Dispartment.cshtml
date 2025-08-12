@@ -4,114 +4,58 @@
 }
 
 @section styles {
-    <link href="@Url.Content("~/Content/Admin/Department.css")" rel="stylesheet" type="text/css" />
-    <style>
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-content {
-            background-color: white;
-            padding: 20px;
-            border-radius: 5px;
-            width: 400px;
-            text-align: center;
-        }
-
-            .modal-content input {
-                width: 100%;
-                padding: 10px;
-                margin: 10px 0;
-                box-sizing: border-box;
-            }
-
-        .btn-primary {
-            background-color: #007bff;
-            color: white;
-            padding: 10px 20px;
-            text-decoration: none;
-            border: none;
-            border-radius: 5px;
-            margin: 5px;
-        }
-
-        .btn-secondary {
-            background-color: #6c757d;
-            color: white;
-            padding: 10px 20px;
-            text-decoration: none;
-            border: none;
-            border-radius: 5px;
-            margin: 5px;
-        }
-
-        .btn-sm {
-            padding: 5px 10px;
-            font-size: 12px;
-        }
-
-        .department-section {
-            margin: 20px 0;
-        }
-
-        .table-custom {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-            .table-custom th, .table-custom td {
-                padding: 10px;
-                border: 1px solid #ddd;
-                text-align: left;
-            }
-
-            .table-custom th {
-                background-color: #f2f2f2;
-            }
-    </style>
+    <link href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="@Url.Content("~/Content/Admin/Manage_Department.css")" rel="stylesheet" type="text/css" />
 }
 
-<header>
-    <div class="container">
-        <h1>Department Dashboard</h1>
+<div class="container">
+    <header>
+        <h2>Department Management</h2>
+        <button id="addDepartmentBtn" class="add-department-button">Add New Department</button>
+    </header>
+
+    <div class="widget">
+        <table id="vwTblDepartments" class="department-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Department Name</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="departmentTableBody"></tbody>
+        </table>
     </div>
-</header>
 
-<div class="department-section">
-    <a href="#" class="btn btn-primary" onclick="openModal()">Add New Department</a>
-</div>
+    <!-- Add Department Modal -->
+    <div id="addDepartmentModal" class="modal">
+        <div class="modal-content widget">
+            <span class="modal-close">&times;</span>
+            <h3>Add New Department</h3>
+            <div class="form-group">
+                <label for="addDeptName">Department Name:</label>
+                <input type="text" id="addDeptName" class="form-input" required />
+            </div>
+            <button type="button" id="btnAddDepartment" class="department-btn save-department-btn">Add Department</button>
+        </div>
+    </div>
 
-<div id="addDepartmentModal" class="modal">
-    <div class="modal-content">
-        <h3>Add New Department</h3>
-        <input type="text" id="departmentName" placeholder="Enter department name" />
-        <div>
-            <button class="btn btn-primary" onclick="addDepartment()">Add</button>
-            <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+    <!-- Edit Department Modal -->
+    <div id="editDepartmentModal" class="modal">
+        <div class="modal-content widget">
+            <span class="modal-close">&times;</span>
+            <h3>Edit Department</h3>
+            <input type="hidden" id="editDeptId" />
+            <div class="form-group">
+                <label for="editDeptName">Department Name:</label>
+                <input type="text" id="editDeptName" class="form-input" required />
+            </div>
+            <button type="button" id="btnUpdateDepartment" class="department-btn save-department-btn">Update Department</button>
         </div>
     </div>
 </div>
-
-<h3>List of Departments</h3>
-<table class="table-custom" id="departmentTable">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Department Name</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody id="departmentTableBody">
-    </tbody>
-</table>
-<script src="~/Scripts/Jquery/jquery-3.7.1.js"></script>
-<script src="~/Scripts/Admin/ManageDepartment.js"></script>
+@section scripts {
+    <script src="~/Scripts/Jquery/jquery-3.7.1.js"></script>
+    <script src="~/Scripts/Admin/ManageDepartment.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    }

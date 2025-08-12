@@ -1,0 +1,227 @@
+﻿@{
+    ViewBag.Title = "Subject Load";
+    Layout = "~/Views/Shared/StudentLayout.cshtml";
+    var studentNumber = Session["UserNumber"]?.ToString() ?? "";
+    var userFullName = Session["UserFullName"]?.ToString() ?? "Student";
+}
+
+@section styles {
+    <link href="@Url.Content("~/Content/Student/Manage_StudentEnrollment.css")" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <style>
+        /* Subject Load Table Styles */
+        .section-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+            .section-table th, .section-table td {
+                padding: 10px;
+                border: 1px solid #e2e8f0;
+                text-align: left;
+                vertical-align: top;
+            }
+
+            .section-table th {
+                background-color: #f7fafc;
+                font-weight: 600;
+                color: #2d3748;
+            }
+
+            .section-table td {
+                color: #4a5568;
+            }
+
+                .section-table td small {
+                    white-space: pre-line; /* Handle <br> tags for multi-line display */
+                }
+
+            .section-table .msi-code {
+                width: 10%;
+            }
+
+            .section-table .subject-code {
+                width: 15%;
+            }
+
+            .section-table .subject {
+                width: 25%;
+            }
+
+            .section-table .units {
+                width: 10%;
+                text-align: center;
+            }
+
+            .section-table .time-day {
+                width: 20%;
+            }
+
+            .section-table .day {
+                width: 10%;
+            }
+
+            .section-table .room {
+                width: 10%;
+            }
+
+            .section-table tbody tr:hover {
+                background-color: #f7fafc;
+            }
+
+        /* Ensure container and widget styles do not interfere */
+        .container, .widget {
+            border: none;
+            box-shadow: none;
+        }
+
+        /* Adjust certificate table for seven columns (including MSI Code) */
+        #certificateTable.section-table thead th:nth-child(1) {
+            width: 10% !important;
+        }
+        /* MSI Code */
+        #certificateTable.section-table thead th:nth-child(2) {
+            width: 15% !important;
+        }
+        /* Code */
+        #certificateTable.section-table thead th:nth-child(3) {
+            width: 25% !important;
+        }
+        /* Subject */
+        #certificateTable.section-table thead th:nth-child(4) {
+            width: 10% !important;
+        }
+        /* Unit */
+        #certificateTable.section-table thead th:nth-child(5) {
+            width: 20% !important;
+        }
+        /* Time */
+        #certificateTable.section-table thead th:nth-child(6) {
+            width: 10% !important;
+        }
+        /* Day */
+        #certificateTable.section-table thead th:nth-child(7) {
+            width: 10% !important;
+        }
+        /* Room */
+    </style>
+}
+
+<div class="container">
+    <header>
+        <h2 style="color: #2d3748; margin-bottom: 20px;">
+            <i class="fas fa-list" style="margin-right: 10px;"></i>
+            Subject Load - Welcome, @userFullName
+        </h2>
+    </header>
+
+    <!-- Notification Area -->
+    <div id="notificationArea"></div>
+
+    <div class="widget">
+        <div class="widget-header">
+            <div class="widget-icon">
+                <i class="fas fa-list"></i>
+            </div>
+            <h3 class="widget-title">Your Subject Load</h3>
+        </div>
+        <div class="form-group">
+            <label for="schoolYear">
+                <i class="fas fa-calendar-alt" style="margin-right: 5px;"></i>
+                School Year
+            </label>
+            <input type="text" id="schoolYear" class="form-input" placeholder="e.g., 2024-2025" />
+        </div>
+        <div class="form-group">
+            <label for="semester">
+                <i class="fas fa-calendar" style="margin-right: 5px;"></i>
+                Semester
+            </label>
+            <select id="semester" class="form-select">
+                <option value="">Select Semester</option>
+                <option value="First">First</option>
+                <option value="Second">Second</option>
+            </select>
+        </div>
+        <button type="button" id="btnLoadSubjects" class="section-btn">
+            <i class="fas fa-search" style="margin-right: 5px;"></i>
+            <span id="btnText">Load Subjects</span>
+            <div class="loading-spinner" id="loadingSpinner" style="display: none;"></div>
+        </button>
+        <button type="button" id="btnViewCertificate" class="section-btn">
+            <i class="fas fa-file-alt" style="margin-right: 5px;"></i>
+            <span>View Certificate of Registration</span>
+        </button>
+        <div class="table-responsive">
+            <table id="subjectLoadTable" class="section-table">
+                <thead>
+                    <tr>
+                        <th class="msi-code">MSI Code</th>
+                        <th class="subject-code">Subject Code</th>
+                        <th class="subject">Subject</th>
+                        <th class="units">Units</th>
+                        <th class="time-day">Time</th>
+                        <th class="day">Day</th>
+                        <th class="room">Room</th>
+                    </tr>
+                </thead>
+                <tbody id="subjectLoad"></tbody>
+            </table>
+        </div>
+
+        <!-- Certificate of Registration Container -->
+        <div id="certificateContainer" class="certificate-container hidden">
+            <div class="certificate-header">
+                <h1>XYZ UNIVERSITY</h1>
+                <p>Main Campus, 123 University Ave., City, Country 12345</p>
+                <p>Tel. No.: (123) 456-7890 | http://www.xyzuniversity.edu</p>
+            </div>
+            <div class="certificate-title">
+                CERTIFICATE OF REGISTRATION
+            </div>
+            <div class="certificate-info">
+                <div>
+                    <p><strong>ID NO:</strong> <span id="certStudentNumber">@studentNumber</span></p>
+                    <p><strong>Name:</strong> <span id="certStudentName">@userFullName</span></p>
+                </div>
+                <div>
+                    <p><strong>School Year:</strong> <span id="certSchoolYear"></span></p>
+                    <p><strong>Semester:</strong> <span id="certSemester"></span></p>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table id="certificateTable" class="section-table">
+                    <thead>
+                        <tr>
+                            <th>MSI Code</th>
+                            <th>Code</th>
+                            <th>Subject</th>
+                            <th>Unit</th>
+                            <th>Time</th>
+                            <th>Day</th>
+                            <th>Room</th>
+                        </tr>
+                    </thead>
+                    <tbody id="certificateSubjects"></tbody>
+                </table>
+            </div>
+            <div class="certificate-total">
+                <p><strong>Total Unit(s):</strong> <span id="certTotalUnits">0.0</span></p>
+            </div>
+            <div class="certificate-footer">
+                <p>Registrar's Office | Generated on: <span id="certGeneratedDate"></span></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/Scripts/Jquery/jquery-3.7.1.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/Student/ManageSubjectLoad.js"></script>
+    <script>
+        var loggedInStudentNumber = "@studentNumber";
+    </script>
+}

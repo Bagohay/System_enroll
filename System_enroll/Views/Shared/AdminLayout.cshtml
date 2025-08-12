@@ -14,12 +14,17 @@
             <ul>
                 <li>@Html.ActionLink("Dashboard", "Admin_Dashboard", "Admin", new { area = "" }, new { @class = "nav-link" })</li>
                 <li>@Html.ActionLink("Manage Students", "Admin_ManageEnrollees", "Admin", new { area = "" }, new { @class = "nav-link" })</li>
-                <li>@Html.ActionLink("Manage Courses", "Manage_Courses", "Admin", new { area = "" }, new { @class = "nav-link" })</li>
+                <li>@Html.ActionLink("Manage Courses", "Display_Courses", "Course", new { area = "" }, new { @class = "nav-link" })</li>
                 <li>@Html.ActionLink("Department", "Display_dispartment", "Course", new { area = "" }, new { @class = "nav-link" })</li>
+                <li>@Html.ActionLink("Section", "Display_Section", "Section", new { area = "" }, new { @class = "nav-link" })</li>
+                <li>@Html.ActionLink("Faculty", "Display_Faculties", "Faculty", new { area = "" }, new { @class = "nav-link" })</li>
+                <li>@Html.ActionLink("Assign Schedule", "Assign_Schedule", "Assign_Schedule", new { area = "" }, new { @class = "nav-link" })</li>
+                <li>@Html.ActionLink("Grading", "ManageGrading", "Grading", new { area = "" }, new { @class = "nav-link" })</li>
                 <li>@Html.ActionLink("Logout", "Login_Page", "Home", new { area = "" }, new { @class = "nav-link" })</li>
             </ul>
         </nav>
     </div>
+    <div>
         @RenderBody()
     </div>
     <footer>
@@ -49,6 +54,7 @@
                         <li><a href="#">Instagram</a></li>
                         <li><a href="#">LinkedIn</a></li>
                         </ personally>
+                    </ul>
                 </div>
             </div>
             <div class="copyright">
